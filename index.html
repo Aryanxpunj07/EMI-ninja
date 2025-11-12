@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evalora EMI Calculator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header / Brand Section -->
+    <header>
+        <div class="container">
+            <div class="logo">Evalora</div>
+            <div class="tagline">Smart Tools for Smarter Decisions</div>
+        </div>
+    </header>
+
+    <!-- Main EMI Calculator Section -->
+    <main class="container">
+        <section class="calculator-section">
+            <div class="card">
+                <h1>EMI Calculator</h1>
+                <form id="emiForm">
+                    <div class="input-group">
+                        <label for="loanAmount">Loan Amount (₹)</label>
+                        <input type="number" id="loanAmount" min="1000" step="1000" placeholder="Enter loan amount" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="interestRate">Interest Rate (%)</label>
+                        <input type="number" id="interestRate" min="0.1" step="0.1" placeholder="Enter interest rate" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="loanTenure">Loan Tenure</label>
+                        <div class="tenure-input">
+                            <input type="number" id="loanTenure" min="1" placeholder="Enter tenure" required>
+                            <div class="toggle-group">
+                                <button type="button" id="monthsToggle" class="toggle-btn">Months</button>
+                                <button type="button" id="yearsToggle" class="toggle-btn active">Years</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="emiType">EMI Type</label>
+                        <select id="emiType" required>
+                            <option value="reducing">Reducing Balance</option>
+                            <option value="flat">Flat Interest</option>
+                            <option value="zero">Zero Interest (No-Cost EMI)</option>
+                            <option value="stepup">Step-Up EMI</option>
+                            <option value="stepdown">Step-Down EMI</option>
+                            <option value="balloon">Balloon EMI</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn-primary calculate-btn">Calculate EMI</button>
+                </form>
+            </div>
+
+            <!-- Results Section -->
+            <div id="emiResults" class="results-section">
+                <div class="card result-card">
+                    <h2>Loan Summary</h2>
+                    <div class="result-grid">
+                        <div class="result-item">
+                            <p class="result-label">Monthly EMI</p>
+                            <p class="result-value" id="monthlyEMI">₹ 0</p>
+                        </div>
+                        <div class="result-item">
+                            <p class="result-label">Total Interest Payable</p>
+                            <p class="result-value" id="totalInterest">₹ 0</p>
+                        </div>
+                        <div class="result-item">
+                            <p class="result-label">Total Payment</p>
+                            <p class="result-value" id="totalPayment">₹ 0</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Graph Section -->
+                    <div class="graph-container">
+                        <h3>Principal vs Interest</h3>
+                        <div class="chart-container">
+                            <canvas id="pieChart" width="200" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Calculator Widget -->
+    <div class="calculator-widget">
+        <div class="calculator-icon" id="calculatorIcon">
+            <span>🧮</span>
+        </div>
+        <div class="calculator-overlay" id="calculatorOverlay">
+            <div class="calculator-popup">
+                <div class="calculator-header">
+                    <h3>Calculator</h3>
+                    <button class="close-btn" id="closeCalculator">&times;</button>
+                </div>
+                <div class="calculator-display">
+                    <input type="text" id="calcDisplay" readonly>
+                </div>
+                <div class="calculator-buttons">
+                    <button class="calc-btn" data-value="AC">AC</button>
+                    <button class="calc-btn" data-value="DEL">DEL</button>
+                    <button class="calc-btn" data-value="%">%</button>
+                    <button class="calc-btn operator" data-value="/">÷</button>
+                    
+                    <button class="calc-btn" data-value="√">√</button>
+                    <button class="calc-btn" data-value="7">7</button>
+                    <button class="calc-btn" data-value="8">8</button>
+                    <button class="calc-btn operator" data-value="*">×</button>
+                    
+                    <button class="calc-btn" data-value="(">(</button>
+                    <button class="calc-btn" data-value="4">4</button>
+                    <button class="calc-btn" data-value="5">5</button>
+                    <button class="calc-btn operator" data-value="-">−</button>
+                    
+                    <button class="calc-btn" data-value=")">)</button>
+                    <button class="calc-btn" data-value="1">1</button>
+                    <button class="calc-btn" data-value="2">2</button>
+                    <button class="calc-btn operator" data-value="+">+</button>
+                    
+                    <button class="calc-btn" data-value="0">0</button>
+                    <button class="calc-btn" data-value=".">.</button>
+                    <button class="calc-btn equals" data-value="=">=</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>© 2025 Evalora — Smart Tools for Smarter Decisions</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
