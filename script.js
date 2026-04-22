@@ -40,6 +40,39 @@ document.addEventListener('DOMContentLoaded', () => {
     calcButtons.forEach(button => {
         button.addEventListener('click', () => handleCalcButtonClick(button.dataset.value));
     });
+
+    // Keyboard Support Setup
+    document.addEventListener('keydown', (event) => {
+        // Only listen for key events if calculator widget is opened
+        if (!calculatorOverlay.classList.contains('active')) return;
+
+        const key = event.key;
+        let mappedValue = null;
+
+        if (['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/', '(', ')', '%'].includes(key)) {
+            mappedValue = key;
+        } else if (key === 'Enter' || key === '=') {
+            mappedValue = '=';
+        } else if (key === 'Backspace') {
+            mappedValue = 'DEL';
+        } else if (key === 'Escape') {
+            mappedValue = 'AC';
+        }
+
+        if (mappedValue) {
+            event.preventDefault();
+            handleCalcButtonClick(mappedValue);
+            
+            // Visual click feedback on the buttons during keypress
+            const btn = Array.from(calcButtons).find(b => b.dataset.value === mappedValue);
+            if (btn) {
+                btn.style.transform = 'scale(0.92)';
+                setTimeout(() => {
+                    btn.style.transform = '';
+                }, 100);
+            }
+        }
+    });
 });
 
 // Toggle Tenure between Years and Months
@@ -263,34 +296,74 @@ function closeCalculatorWidget() {
 
 // Standard Calculator Functions
 function handleCalcButtonClick(value) {
+    if (calcDisplay.value === 'Error') {
+        calcDisplay.value = '';
+        currentInput = '';
+        shouldResetScreen = false;
+    }
+
     if (value === 'AC') {
         // All Clear
         calcDisplay.value = '';
         currentInput = '';
-        operator = '';
-        previousInput = '';
+        shouldResetScreen = false;
         return;
     }
     
     if (value === 'DEL') {
+        if (shouldResetScreen) {
+            calcDisplay.value = '';
+            currentInput = '';
+            shouldResetScreen = false;
+            return;
+        }
         // Delete last character
         calcDisplay.value = calcDisplay.value.slice(0, -1);
-        currentInput = calcDisplay.value;
+        currentInput = calcDisplay.value.match(/[\d.]+$/)?.[0] || '';
         return;
     }
     
     if (value === '√') {
-        // Square root
-        if (currentInput === '') return;
-        const result = Math.sqrt(parseFloat(currentInput));
-        calcDisplay.value = result;
-        currentInput = result.toString();
+        if (calcDisplay.value === '') return;
+        try {
+            const currentEval = Function('"use strict"; return (' + calcDisplay.value + ')')();
+            if (currentEval < 0) throw new Error('Invalid');
+            const result = Math.sqrt(currentEval);
+            
+            // Format to avoid long decimals
+            let formattedResult = Number.isInteger(result) ? result : parseFloat(result.toFixed(8));
+            
+            calcDisplay.value = formattedResult;
+            currentInput = formattedResult.toString();
+            shouldResetScreen = true;
+        } catch(e) {
+            calcDisplay.value = 'Error';
+            currentInput = '';
+            shouldResetScreen = true;
+        }
         return;
     }
     
     if (['+', '-', '*', '/', '%', '(', ')'].includes(value)) {
-        // Handle operators and parentheses
-        if (currentInput === '' && value !== '(') return;
+        if (shouldResetScreen && !['(', ')'].includes(value)) {
+            // Continue calculating with previous result
+            shouldResetScreen = false;
+        } else if (shouldResetScreen) {
+            // Reset for parentheses
+            calcDisplay.value = '';
+            shouldResetScreen = false;
+        }
+
+        const lastChar = calcDisplay.value.slice(-1);
+        
+        if (['+', '-', '*', '/', '%'].includes(value)) {
+            if (calcDisplay.value === '' && value !== '-') return;
+            if (['+', '-', '*', '/', '%'].includes(lastChar)) {
+                // Replace the last operator
+                calcDisplay.value = calcDisplay.value.slice(0, -1) + value;
+                return;
+            }
+        }
         
         calcDisplay.value += value;
         currentInput = '';
@@ -298,24 +371,37 @@ function handleCalcButtonClick(value) {
     }
     
     if (value === '=') {
-        // Calculate result
-        if (currentInput === '') return;
+        if (calcDisplay.value === '') return;
         try {
-            // Using Function constructor for safe evaluation
             const result = Function('"use strict"; return (' + calcDisplay.value + ')')();
-            calcDisplay.value = result;
-            currentInput = result.toString();
+            
+            if (!isFinite(result) || isNaN(result)) throw new Error('Math Error');
+            
+            let formattedResult = Number.isInteger(result) ? result : parseFloat(result.toFixed(8));
+            calcDisplay.value = formattedResult;
+            currentInput = formattedResult.toString();
+            shouldResetScreen = true;
         } catch (e) {
             calcDisplay.value = 'Error';
             currentInput = '';
+            shouldResetScreen = true;
         }
         return;
     }
     
     // Handle numbers and decimal point
+    if (shouldResetScreen) {
+        calcDisplay.value = '';
+        currentInput = '';
+        shouldResetScreen = false;
+    }
+
     if (value === '.') {
         if (currentInput.includes('.')) return; // Prevent multiple decimals
-        if (currentInput === '') currentInput = '0'; // Add leading zero
+        if (currentInput === '') {
+            currentInput = '0'; // Add leading zero
+            calcDisplay.value += '0';
+        }
     }
     
     // Add digit or decimal to current input

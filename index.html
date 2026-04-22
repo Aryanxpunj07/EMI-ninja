@@ -3,15 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Evalora EMI Calculator</title>
+    <title>Evalora EMI Calculator | Best Online Loan EMI Planner</title>
+    <meta name="description" content="Use the Evalora EMI Calculator to easily calculate your monthly Equated Monthly Installment (EMI) for home loans, car loans, and personal loans. Accurately plan your finances.">
+    <meta name="keywords" content="EMI Calculator, Loan Calculator, Home Loan EMI, Personal Loan EMI, Interest Rate, Evalora, Financial Tools">
+    <meta name="robots" content="index, follow">
+    <!-- AdSense Verification Script Placeholder (Replace data-ad-client with real ID) -->
+    <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Header / Brand Section -->
     <header>
-        <div class="container">
-            <div class="logo">Evalora</div>
-            <div class="tagline">Smart Tools for Smarter Decisions</div>
+        <div class="container header-content">
+            <div>
+                <div class="logo">Evalora</div>
+                <div class="tagline">Smart Tools for Smarter Decisions</div>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
@@ -104,24 +118,28 @@
                     <input type="text" id="calcDisplay" readonly>
                 </div>
                 <div class="calculator-buttons">
-                    <button class="calc-btn" data-value="AC">AC</button>
+                    <button class="calc-btn" data-value="AC" style="grid-column: span 2;">AC</button>
                     <button class="calc-btn" data-value="DEL">DEL</button>
                     <button class="calc-btn" data-value="%">%</button>
-                    <button class="calc-btn operator" data-value="/">÷</button>
-                    
-                    <button class="calc-btn" data-value="√">√</button>
-                    <button class="calc-btn" data-value="7">7</button>
-                    <button class="calc-btn" data-value="8">8</button>
-                    <button class="calc-btn operator" data-value="*">×</button>
                     
                     <button class="calc-btn" data-value="(">(</button>
+                    <button class="calc-btn" data-value=")">)</button>
+                    <button class="calc-btn" data-value="√">√</button>
+                    <button class="calc-btn operator" data-value="/">÷</button>
+                    
+                    <button class="calc-btn" data-value="7">7</button>
+                    <button class="calc-btn" data-value="8">8</button>
+                    <button class="calc-btn" data-value="9">9</button>
+                    <button class="calc-btn operator" data-value="*">×</button>
+                    
                     <button class="calc-btn" data-value="4">4</button>
                     <button class="calc-btn" data-value="5">5</button>
+                    <button class="calc-btn" data-value="6">6</button>
                     <button class="calc-btn operator" data-value="-">−</button>
                     
-                    <button class="calc-btn" data-value=")">)</button>
                     <button class="calc-btn" data-value="1">1</button>
                     <button class="calc-btn" data-value="2">2</button>
+                    <button class="calc-btn" data-value="3">3</button>
                     <button class="calc-btn operator" data-value="+">+</button>
                     
                     <button class="calc-btn" data-value="0">0</button>
@@ -132,10 +150,43 @@
         </div>
     </div>
 
+    <!-- SEO & Info Section (Crucial for AdSense Approval) -->
+    <article class="container seo-content">
+        <div class="card">
+            <h2>Understanding EMI: Your Complete Guide</h2>
+            <p>Welcome to the Evalora EMI Calculator. Whether you're planning to take out a home loan, looking for a new car, or securing a personal line of credit, understanding your Equated Monthly Installment (EMI) is the most critical step in financial planning. This tool provides an accurate and instant breakdown of your payment plan, allowing you to optimize your budget.</p>
+            
+            <!-- AdSense Ad Placeholder (In-article) -->
+            <div class="ad-placeholder" style="text-align: center; margin: 20px 0;">
+                <!-- <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXXXXXXXXXXXXXX" data-ad-slot="XXXXXXXXXX" data-ad-format="auto" data-full-width-responsive="true"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script> -->
+            </div>
+
+            <h3>What is an EMI?</h3>
+            <p>EMI stands for Equated Monthly Installment. It is a fixed payment amount made by a borrower to a lender at a specified date each calendar month. Equated monthly installments are used to pay off both interest and principal each month so that over a specified number of years, the loan is fully paid off along with interest.</p>
+            
+            <h3>How is EMI Calculated?</h3>
+            <p>The mathematical formula used for calculating EMIs on a reducing balance is:</p>
+            <p><strong>EMI = [P x R x (1+R)^N]/[(1+R)^N-1]</strong></p>
+            <ul>
+                <li><strong>P</strong> stands for the Principal Loan Amount.</li>
+                <li><strong>R</strong> is the monthly interest rate (Annual Rate / 12 / 100).</li>
+                <li><strong>N</strong> is the loan tenure in months.</li>
+            </ul>
+
+            <h3>Benefits of Using Our Calculator</h3>
+            <p>Our EMI calculator allows you to experiment with different Interest Types like Flat, Reducing, Step-Up, and Balloon payments. Understanding the difference between flat and reducing interest, for example, can save you thousands of rupees over the lifetime of a home loan.</p>
+        </div>
+    </article>
+
     <!-- Footer -->
     <footer>
-        <div class="container">
+        <div class="container footer-content">
             <p>© 2025 Evalora — Smart Tools for Smarter Decisions</p>
+            <ul class="footer-links">
+                <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                <li><a href="terms.html">Terms of Service</a></li>
+                <li><a href="contact.html">Contact Us</a></li>
+            </ul>
         </div>
     </footer>
 
